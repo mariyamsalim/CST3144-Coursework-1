@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After School Activities</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="App">
+        <header>
+            <h1 v-text="sitename"></h1>
+            <button v-on:click='showCheckout'>
+                <span><i class="fa-solid fa-cart-shopping"></i></span>
+                {{cartItemCount}}
+            </button>
+        </header>
+        <main>
+            <div v-if="showProduct">
+                <div v-for="product in products" :key="product.id" class="product-card">
+                    <figure>
+                        <img :src="product.image" :alt="product.title">
+                    </figure>
+                    <h2>{{product.title}}</h2>
+                    <p v-html="product.description"></p>
+                    <p>Price: AED {{product.price}}</p>
+                    <p>Available Slots: {{product.availableInventory}}</p>
+                    <button 
+                        @click="addToCart(product)" 
+                        v-if="canAddToCart(product)">
+                        Add to Cart
+                    </button>
+                    <button disabled v-else>Add to Cart</button>
+                </div>
+            </div>
+
+            <div v-else>
+                <h2>Checkout</h2>
+                <h3>Your Cart ({{cartItemCount}} Items)</h3>
+                <div v-if="cartProducts.length > 0">
+                    <div v-for="item in cartProducts" :key="'cart-' + item.id" class="cart-item">
+                        <p>
+                            <strong>{{item.title}}</strong> - 
+                            Quantity: {{item.quantity}} | Total: AED {{item.quantity*item.price}} each
+                            <button @click="removeItem(item)" style="margin-left: 10px;">
+                                Remove one
+                            </button>
+                        </p>
+                    </div>
+                    <hr>
+                    <p>
+                        <strong>Cart Subtotal: </strong> 
+                        <span style="font-size: 1.2em; color: green;">AED {{cartTotal}}</span>
+                    </p> 
+                </div>
+                <div v-else>
+                    <p>Your cart is empty.</p>
+                </div>
+                <hr>
+                
+                <h3>Contact Information</h3>
+                <p>
+                    <strong>First Name: </strong>
+                    <input v-model.trim="order.firstName" />
+                </p>
+                <p>
+                    <strong>Last Name: </strong>
+                    <input v-model.trim="order.lastName" />
+                </p>
+                <p>
+                    <strong>Phone: </strong> <input v-model="order.phone" />
+                </p>
+                <p>
+                    <strong>Email: </strong> <input v-model="order.email" />
+                </p>
+                <h2>Booking Confirmation</h2>
+                <p>First Name: {{order.firstName}}</p>
+                <p>Last Name: {{order.lastName}}</p>
+                <p>Phone: {{order.phone}}</p>
+                <p>Email: {{order.email}}</p> 
+                
+                <button v-on:click="submitForm">Book</button>
+            </div>
+        </main>
+    </div>
+    <script src="script.js">
+    </script>
+</body>
+</html>
