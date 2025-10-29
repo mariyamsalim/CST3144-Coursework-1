@@ -21,8 +21,9 @@
             <div v-if="showProduct">
                 <div v-for="product in products" :key="product.id" class="product-card">
                     <figure>
-                        <img :src="product.image" :alt="product.title">
+                        <img v-bind:src="product.image" :alt="product.title">
                     </figure>
+                    <i v-bind:class="product.icon" ></i>
                     <h2>{{product.title}}</h2>
                     <p v-html="product.description"></p>
                     <p>Price: AED {{product.price}}</p>
