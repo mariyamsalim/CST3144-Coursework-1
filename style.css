@@ -1,131 +1,230 @@
 body {
-  font-family: 'Poppins', sans-serif;
-  background: #f8f9fb;
-  color: #333;
-  margin: 0;
-  padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f8f9fb;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
 header {
-  background: #ffffff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 header h1 {
-  font-size: 1.8rem;
-  color: #0b4b75;
-  font-weight: 600;
-  margin: 0;
+    font-size: 1.8rem;
+    color: #0b4b75;
+    font-weight: 600;
+    margin: 0;
 }
 
 header button {
-  background: #0b4b75;
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s ease-in-out;
+    background: #0b4b75;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
 }
 
 header button:hover {
-  background: #09619a;
+    background: #09619a;
 }
 
 main {
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: 3fr; 
-  gap: 2rem;
-  justify-items: center;
+    padding: 2rem;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
 }
 
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); 
+    gap: 2rem;
+    justify-items: center;
+    width: 100%; 
+    max-width: 1200px; 
+    margin-top: 1rem;
+}
+
+.sort-button {
+    background: #5a5a5a;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    align-self: flex-start; 
+    margin-left: calc(50% - 600px); 
+    max-width: 1200px;
+}
+
+.sort-button:hover {
+    background: #737373;
+}
+
+.sort-button i {
+    margin-right: 5px;
+}
+
+/* Modal/Popup Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+}
+
+.modal-content h3 {
+    color: #0b4b75;
+    margin-top: 0;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.sort-group {
+    margin-bottom: 1.5rem;
+}
+
+.sort-group h4 {
+    margin: 0.5rem 0;
+    color: #333;
+}
+
+.sort-group label {
+    display: block;
+    margin: 0.5rem 0;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #555;
+}
+
+.sort-group input[type="radio"] {
+    margin-right: 8px;
+    width: auto;
+}
+
+.close-modal-button {
+    background: #0b4b75;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s ease-in-out;
+}
+
+.close-modal-button:hover {
+    background: #09619a;
+}
+
+/* Existing product-card styles remain */
 .product-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-  width: 270px;
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    width: 270px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
 }
 
 .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
-
+/* ... (rest of the product-card, figure, img, h2, p, button styles) ... */
 .product-card figure {
-  margin: 0;
-  height: 200px;
-  overflow: hidden;
+    margin: 0;
+    height: 200px;
+    overflow: hidden;
 }
 
 .product-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
 }
 
 .product-card:hover img {
-  transform: scale(1.05);
+    transform: scale(1.05);
 }
 
 .product-card h2 {
-  font-size: 1.3rem;
-  color: #0b4b75;
-  margin: 1rem 0 0.5rem;
-  font-weight: 600;
+    font-size: 1.3rem;
+    color: #0b4b75;
+    margin: 1rem 0 0.5rem;
+    font-weight: 600;
 }
 
 .product-card p {
-  font-size: 0.95rem;
-  padding: 0 1rem;
-  margin: 0.5rem 0;
-  color: #555;
-  line-height: 1.5;
+    font-size: 0.95rem;
+    padding: 0 1rem;
+    margin: 0.5rem 0;
+    color: #555;
+    line-height: 1.5;
 }
 
 .product-card button {
-  background: #0b4b75;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1.2rem;
-  margin: 1rem 0 1.2rem;
-  cursor: pointer;
-  transition: background 0.2s ease-in-out;
+    background: #0b4b75;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    margin: 1rem 0 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
 }
 
 .product-card button:hover {
-  background: #09619a;
+    background: #09619a;
 }
 
 .product-card button[disabled] {
-  background: #ccc;
-  cursor: not-allowed;
+    background: #ccc;
+    cursor: not-allowed;
 }
 
 main h2 {
-  text-align: center;
-  color: #0b4b75;
+    text-align: center;
+    color: #0b4b75;
 }
 
 input, select {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin: 0.3rem 0;
-  width: 100%;
-  max-width: 300px;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin: 0.3rem 0;
+    width: 100%;
+    max-width: 300px;
 }
-

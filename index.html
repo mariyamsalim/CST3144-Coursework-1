@@ -19,21 +19,64 @@
         </header>
         <main>
             <div v-if="showProduct">
-                <div v-for="product in products" :key="product.id" class="product-card">
-                    <figure>
-                        <img v-bind:src="product.image" :alt="product.title">
-                    </figure>
-                    <i v-bind:class="product.icon" ></i>
-                    <h2>{{product.title}}</h2>
-                    <p v-html="product.description"></p>
-                    <p>Price: AED {{product.price}}</p>
-                    <p>Available Slots: {{product.availableInventory}}</p>
-                    <button 
-                        @click="addToCart(product)" 
-                        v-if="canAddToCart(product)">
-                        Add to Cart
+                <button class="sort-button" @click="showSortModal = true">
+                    <i class="fa-solid fa-arrow-up-wide-short"></i> Sort
+                </button>
+                
+                <div class="product-list">
+                    <div v-for="product in sortedProducts" :key="product.id" class="product-card">
+                        <figure>
+                            <img v-bind:src="product.image" :alt="product.title">
+                        </figure>
+                        <i v-bind:class="product.icon" ></i>
+                        <h2>{{product.title}}</h2>
+                        <p v-html="product.description"></p>
+                        <p><strong>Location:</strong> {{product.location}}</p>
+                        <p>Price: AED {{product.price}}</p>
+                        <p>Available Slots: {{product.availableInventory}}</p>
+                        <button 
+                            @click="addToCart(product)" 
+                            v-if="canAddToCart(product)">
+                            Add to Cart
+                        </button>
+                        <button disabled v-else>Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="showSortModal" class="modal-overlay" @click.self="showSortModal = false">
+                <div class="modal-content">
+                    <h3>Sort Activities</h3>
+                    
+                    <div class="sort-group">
+                        <h4>Sort By:</h4>
+                        <label>
+                            <input type="radio" v-model="sortCriteria" value="title"> Subject
+                        </label>
+                        <label>
+                            <input type="radio" v-model="sortCriteria" value="price"> Price
+                        </label>
+                        <label>
+                            <input type="radio" v-model="sortCriteria" value="location"> Location
+                        </label>
+                        <label>
+                            <input type="radio" v-model="sortCriteria" value="availableInventory"> Available Slots
+                        </label>
+                    </div>
+
+                    <div class="sort-group">
+                        <h4>Order:</h4>
+                        <label>
+                            <input type="radio" v-model="sortOrder" value="ascending"> Ascending
+                        </label>
+                        <label>
+                            <input type="radio" v-model="sortOrder" value="descending"> Descending
+                        </label>
+                    </div>
+
+                    <button @click="showSortModal = false" class="close-modal-button">
+                        Close
                     </button>
-                    <button disabled v-else>Add to Cart</button>
                 </div>
             </div>
 

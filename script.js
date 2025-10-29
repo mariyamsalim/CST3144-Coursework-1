@@ -2,6 +2,9 @@ var webstore = new Vue({
     el: '#App',
     data: {
         sitename: 'After School Activities',
+        showSortModal: false,
+        sortCriteria: 'title', 
+        sortOrder: 'ascending', 
         products: [
             {
             id: 1001,
@@ -11,6 +14,7 @@ var webstore = new Vue({
             price: 850,
             image: "../images/swimming.jpg",
             availableInventory: 15,
+            location: "North Campus"
             },
             {
             id: 1002,
@@ -20,6 +24,7 @@ var webstore = new Vue({
             price: 2800,
             image: "../images/horseriding.jpg",
             availableInventory: 8,
+            location: "South Campus"
             },
             {
             id: 1003,
@@ -29,6 +34,7 @@ var webstore = new Vue({
             price: 950,
             image: "../images/coding.jpg",
             availableInventory: 20,
+            location: "Online"
             },
             {
             id: 1004,
@@ -38,15 +44,17 @@ var webstore = new Vue({
             price: 750,
             image: "../images/gymnastics.jpg",
             availableInventory: 18,
+            location: "North Campus"
             },
             {
             id: 1005,
-            icon: "",
+            icon: " ", 
             title: "Ballet",
             description: "Focus on grace, technique, and classical form. Students will learn fundamental positions, terminology, and barre work, building a strong foundation in discipline, posture, and fluid movement in a supportive and structured environment.",
             price: 650,
             image: "../images/ballet.jpg",
             availableInventory: 25,
+            location: "South Campus"
             },
             {
             id: 1006,
@@ -56,6 +64,7 @@ var webstore = new Vue({
             price: 1100,
             image: "../images/theatre.jpg",
             availableInventory: 12,
+            location: "North Campus"
             },
             {
             id: 1007,
@@ -65,6 +74,7 @@ var webstore = new Vue({
             price: 1050,
             image: "../images/tennis.jpg",
             availableInventory: 10,
+            location: "Outdoor Courts"
             },
             {
             id: 1008,
@@ -74,6 +84,7 @@ var webstore = new Vue({
             price: 1200,
             image: "../images/icehockey.jpg",
             availableInventory: 15,
+            location: "Ice Rink"
             },
             {
             id: 1009,
@@ -83,6 +94,7 @@ var webstore = new Vue({
             price: 1100,
             image: "../images/padel.jpeg",
             availableInventory: 14,
+            location: "Outdoor Courts"
             },
             {
             id: 1010,
@@ -92,6 +104,7 @@ var webstore = new Vue({
             price: 2200,
             image: "../images/sailing.jpg",
             availableInventory: 6,
+            location: "Marina"
             },
             {
             id: 1011,
@@ -101,6 +114,7 @@ var webstore = new Vue({
             price: 900,
             image: "../images/surfing.jpg",
             availableInventory: 20,
+            location: "Beach"
             }
         ],
         cart: [],
@@ -148,6 +162,26 @@ var webstore = new Vue({
         },
         canAddToCart() {
             return (product) => product.availableInventory > 0;
+        },
+        
+        sortedProducts() {
+            let productsArray = this.products.slice(); 
+            productsArray.sort((a, b) => {
+                const criteria = this.sortCriteria;
+                const aValue = a[criteria];
+                const bValue = b[criteria];
+                let comparison = 0;
+
+                if (typeof aValue === 'string') {
+                    comparison = aValue.localeCompare(bValue);
+                } else {
+                    comparison = aValue - bValue;
+                }
+
+                return this.sortOrder === 'ascending' ? comparison : comparison * -1;
+            });
+
+            return productsArray;
         },
         cartProducts() {
             return this.cart.map(cartItem => {
