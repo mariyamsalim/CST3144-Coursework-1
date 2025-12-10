@@ -89,8 +89,8 @@
             <h3>Contact Information</h3>
             <p><strong>First Name: </strong><input v-model.trim="order.firstName" /></p>
             <p><strong>Last Name: </strong><input v-model.trim="order.lastName" /></p>
-            <p><strong>Phone: </strong> <input v-model="order.phone" /></p>
-            <p><strong>Email: </strong> <input v-model="order.email" /></p>
+            <p><strong>Phone: </strong> <input v-model.trim="order.phone" /></p>
+            <p><strong>Email: </strong> <input v-model.trim="order.email" /></p>
             <h2>Booking Confirmation</h2>
             <p>First Name: {{order.firstName}}</p>
             <p>Last Name: {{order.lastName}}</p>

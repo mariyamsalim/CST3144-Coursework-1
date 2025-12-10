@@ -11,10 +11,10 @@ var webstore = new Vue({
         showProduct: true,
         checkoutConfirmed: false,
         order: {
-            firstName: ' ',
-            lastName: ' ',
-            phone: ' ',
-            email: ' ',
+            firstName: '',
+            lastName: '',
+            phone: '',
+            email: '',
         },
     },
     created: function() {
@@ -156,5 +156,3 @@ var webstore = new Vue({
         }
     }
 });
-
-//commit all changes
