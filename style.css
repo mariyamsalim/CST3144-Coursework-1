@@ -9,13 +9,13 @@ body {
 header {
     background: #ffffff;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 1.2rem 2rem;
     position: sticky;
     top: 0;
     z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; 
+    align-items: center;
 }
 
 header h1 {
@@ -23,6 +23,7 @@ header h1 {
     color: #0b4b75;
     font-weight: 600;
     margin: 0;
+    justify-self: start;
 }
 
 header button {
@@ -34,10 +35,22 @@ header button {
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s ease-in-out;
+    justify-self: end; 
 }
 
 header button:hover {
     background: #09619a;
+}
+
+.search-bar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar input {
+    width: 300px; 
+    margin: 0;    
 }
 
 main {

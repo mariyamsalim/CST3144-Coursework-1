@@ -11,7 +11,10 @@
 <body>
     <div id="App">
         <header>
-            <h1 v-text="sitename"></h1>
+            <h1 v-text="sitename"></h1>   
+            <div class="search-bar">
+                <input type="text" v-model="searchQuery" placeholder="Search lessons..." v-on:input="performSearch">
+            </div>
             <button v-on:click='showCheckout' :disabled="isCartEmpty">
                 <span><i class="fa-solid fa-cart-shopping"></i></span>
                 {{cartItemCount}}
@@ -22,9 +25,6 @@
                 <button class="sort-button" @click="showSortModal = true">
                     <i class="fa-solid fa-arrow-up-wide-short"></i> Sort
                 </button> 
-                <div class="search-bar">
-                    <input type="text" v-model="searchQuery" placeholder="Search lessons..." v-on:input="performSearch">
-                </div>
                 <div class="product-list">
                     <div v-for="product in sortedProducts" :key="product.id" class="product-card">
                         <figure>
