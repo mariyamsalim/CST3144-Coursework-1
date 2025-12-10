@@ -111,6 +111,14 @@ var webstore = new Vue({
             return this.cartProducts.reduce((total, item) => {
                 return total + (item.price * item.quantity);
             }, 0);
+        },
+        isValidOrder() {
+            const nameRegex = /^[A-Za-z\s]+$/;
+            const phoneRegex = /^[0-9]+$/;
+
+            return nameRegex.test(this.order.firstName) && 
+                nameRegex.test(this.order.lastName) && 
+                phoneRegex.test(this.order.phone);
         }
     }
 });

@@ -127,7 +127,7 @@
                     <p>Last Name: {{order.lastName}}</p>
                     <p>Phone: {{order.phone}}</p>
                     <p>Email: {{order.email}}</p>                 
-                    <button v-on:click="submitForm">Book</button>
+                    <button v-on:click="submitForm" :disabled="!isValidOrder">Book</button>
                 </div>
             </div>
         </main>
