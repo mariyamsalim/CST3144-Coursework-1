@@ -155,10 +155,12 @@ var webstore = new Vue({
         isValidOrder() {
             const nameRegex = /^[A-Za-z\s]+$/;
             const phoneRegex = /^[0-9]+$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
             return nameRegex.test(this.order.firstName) && 
                 nameRegex.test(this.order.lastName) && 
-                phoneRegex.test(this.order.phone);
+                phoneRegex.test(this.order.phone) &&
+                emailRegex.test(this.order.email);
         }
     }
 });
