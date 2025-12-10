@@ -28,7 +28,7 @@
                 <div class="product-list">
                     <div v-for="product in sortedProducts" :key="product.id" class="product-card">
                         <figure>
-                            <img v-bind:src="product.image" :alt="product.title">
+                            <img v-bind:src="'https://cst3144-server-fi5v.onrender.com/images/' + product.image" :alt="product.title">
                         </figure>
                         <h2>{{product.title}}</h2>
                         <p v-html="product.description"></p>
