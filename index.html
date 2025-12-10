@@ -13,8 +13,8 @@
         <header>
             <h1 v-text="sitename"></h1>
             
-            <div class="search-bar" v-if="showProduct">
-                <input type="text" v-model="searchQuery" placeholder="Search" v-on:input="performSearch">
+            <div class="search-bar">
+                <input type="text" v-if="showProduct" v-model="searchQuery" placeholder="Search" v-on:input="performSearch">
             </div>
 
             <button v-on:click='showCheckout' :disabled="isCartEmpty">
@@ -107,7 +107,6 @@
                     
                     <div v-else class="empty-cart-msg">
                         <p>Your cart is empty.</p>
-                        <button class="back-btn-link" @click="showCheckout">Go back to shop</button>
                     </div>
                 </div>
 
