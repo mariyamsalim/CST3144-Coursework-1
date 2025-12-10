@@ -10,6 +10,7 @@ var webstore = new Vue({
         cart: [],
         showProduct: true,
         checkoutConfirmed: false,
+        orderSubmitted: false,
         order: {
             firstName: '',
             lastName: '',
@@ -56,9 +57,7 @@ var webstore = new Vue({
 
             fetch('https://cst3144-server-fi5v.onrender.com/collection/orders', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newOrder),
             })
             .then(response => response.json())
@@ -67,7 +66,6 @@ var webstore = new Vue({
                     const product = this.products.find(p => p.id === item.id);
                     if (product) {
                         const newSpace = product.availableInventory - item.quantity;
-
                         fetch(`https://cst3144-server-fi5v.onrender.com/collection/lessons/${item.id}`, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
@@ -75,9 +73,7 @@ var webstore = new Vue({
                         });
                     }
                 });
-                alert('Order submitted!');
-                this.cart = [];
-                this.showProduct = true;
+                this.orderSubmitted = true; 
             })
             .catch(error => console.error('Error submitting order:', error));
         },
@@ -101,6 +97,16 @@ var webstore = new Vue({
                 this.products = json;
             })
             .catch(error => console.error('Error fetching search results:', error));
+        },
+        resetCart() {
+            this.cart = [];
+            this.showProduct = true;
+            this.checkoutConfirmed = false;
+            this.orderSubmitted = false;
+            this.order.firstName = '';
+            this.order.lastName = '';
+            this.order.phone = '';
+            this.order.email = '';
         }
     },
     computed: {
