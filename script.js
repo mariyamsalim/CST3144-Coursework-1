@@ -44,8 +44,30 @@ var webstore = new Vue({
         proceedToContact: function() {
             this.checkoutConfirmed = true;
         },
-        submitForm: function () {
-            {alert('Booking done!') }
+        submitForm: function() {
+            const newOrder = {
+                firstName: this.order.firstName,
+                lastName: this.order.lastName,
+                phone: this.order.phone,
+                email: this.order.email,
+                cart: this.cart, 
+                spaces: this.cartItemCount 
+            };
+
+            fetch('https://cst3144-server-fi5v.onrender.com/collection/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newOrder),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Order submitted!');
+                this.cart = [];
+                this.showProduct = true;
+            })
+            .catch(error => console.error('Error submitting order:', error));
         },
         removeItem(productInCart) {
             let cartIndex = this.cart.findIndex(item => item.id === productInCart.id);
