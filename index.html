@@ -9,29 +9,37 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Root element, controlled by Vue instance in script.js -->
     <div id="App">
         <header>
             <h1 v-text="sitename"></h1>
-            
+            <!-- Search Bar -->
             <div class="search-bar">
                 <input type="text" v-if="showProduct" v-model="searchQuery" placeholder="Search" v-on:input="performSearch">
             </div>
-
+            <!-- Cart Button, :disabled prevents opening chekout when cart is empty -->
             <button v-on:click='showCheckout' :disabled="isCartEmpty">
                 <span><i class="fa-solid fa-cart-shopping"></i></span>
+                <!-- Displays number of items in cart -->
                 {{cartItemCount}}
             </button>
         </header>
-                <main>
-            <div v-if="showProduct"> <button class="sort-button" @click="showSortModal = true">
+        <main>
+            <!-- Product list page -->
+            <div v-if="showProduct"> 
+                <!-- Sort button, opens the sorting modal -->
+                <button class="sort-button" @click="showSortModal = true">
                     <i class="fa-solid fa-arrow-up-wide-short"></i> Sort
                 </button> 
+                <!-- Message displayed if no products match the search query -->
                 <div v-if="products.length === 0" class="no-results">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <p>We couldn't find any activities matching "<strong>{{searchQuery}}</strong>".</p>
                     <p>Try checking your spelling or search for a different activity.</p>
                 </div>
+                <!-- Product list container -->
                 <div class="product-list">
+                    <!-- Loops through products after applying sorting, sortedProducts property returns products in sorted order -->
                     <div v-for="product in sortedProducts" :key="product.id" class="product-card">
                         <figure>
                             <img v-bind:src="'https://cst3144-server-fi5v.onrender.com/images/' + product.image" :alt="product.title">
@@ -41,14 +49,19 @@
                         <p><strong>Location:</strong> {{product.location}}</p>
                         <p><strong>Price:</strong> AED {{product.price}}</p>
                         <p><strong>Available Slots:</strong> {{product.availableInventory}}</p>
-                        <button @click="addToCart(product)" v-if="canAddToCart(product)">Add to Cart</button>
-                        <button disabled v-else>Add to Cart</button>
+                        <!-- Book a slot button is only enabled if there are spaces left in inventory -->
+                        <button @click="addToCart(product)" v-if="canAddToCart(product)">Book a slot</button>
+                        <!-- Book a slot button is disabled if the activity is fully booked -->
+                        <button disabled v-else>Book a slot</button>
                     </div>
                 </div>
 
+                <!-- Sorting modal -->
                 <div v-if="showSortModal" class="modal-overlay" @click.self="showSortModal = false">
+                    <!-- Sorting options -->
                     <div class="modal-content">
                         <h3>Sort Activities</h3>
+                        <!-- Sorting criteria like title, price etc) -->
                         <div class="sort-group">
                             <h4>Sort By:</h4>
                             <label><input type="radio" v-model="sortCriteria" value="title"> Activity</label>
@@ -56,6 +69,7 @@
                             <label><input type="radio" v-model="sortCriteria" value="location"> Location</label>
                             <label><input type="radio" v-model="sortCriteria" value="availableInventory"> Available Slots</label>
                         </div>
+                        <!-- Sorting order like ascending and descending -->
                         <div class="sort-group">
                             <h4>Order:</h4>
                             <label><input type="radio" v-model="sortOrder" value="ascending"> Ascending</label>
@@ -65,25 +79,31 @@
                     </div>
                 </div>
             </div> 
+            <!-- Checkout page -->
             <div v-else class="checkout-container">
                 <div class="checkout-header">
+                    <!-- Back button in checkout header -->
                     <button class="back-btn" @click="showCheckout">
-                        <i class="fa-solid fa-arrow-left"></i> Back to Main Page
+                        <i class="fa-solid fa-arrow-left"></i> Back to Home
                     </button>
                     <h2>Checkout</h2>
                 </div>
 
+                <!-- Cart Items -->
                 <div class="checkout-section">
                     <h3>Your Cart ({{cartItemCount}} Items)</h3>
-                    
+                    <!-- Displays cart if not empty -->
                     <div v-if="cartProducts.length > 0">
+                        <!-- Loop through items in cart -->
                         <div v-for="item in cartProducts" :key="'cart-' + item.id" class="cart-product-card">
                             <figure class="cart-product-figure">
                                 <img v-bind:src="'https://cst3144-server-fi5v.onrender.com/images/' + item.image" :alt="item.title">
                             </figure>
+                            <!-- Item details -->
                             <div class="cart-product-details">
                                 <h4>{{item.title}}</h4>
                                 <p class="price">AED {{item.price}}</p>
+                                <!-- Quantity display and remove option -->
                                 <div class="qty-control">
                                     <span>Qty: {{item.quantity}}</span>
                                     <button class="remove-btn" @click="removeItem(item)">
@@ -91,25 +111,29 @@
                                     </button>
                                 </div>
                             </div>
+                            <!-- Total cost per item calculation -->
                             <div class="cart-item-total">
                                 AED {{item.quantity * item.price}}
                             </div>
                         </div>
 
+                        <!-- Cart subtotal -->
                         <div class="cart-summary">
                             <p><strong>Subtotal:</strong> <span>AED {{cartTotal}}</span></p> 
                         </div>
-
+                        <!-- Button to proceed to customer info form -->
                         <button v-if="!checkoutConfirmed" @click="proceedToContact" class="checkout-btn full-width">
                             Proceed to Contact Info
                         </button>   
                     </div>
                     
+                    <!-- Message displayed when cart is empty -->
                     <div v-else class="empty-cart-msg">
                         <p>Your cart is empty.</p>
                     </div>
                 </div>
 
+                <!-- Contact information form -->
                 <div v-if="checkoutConfirmed" class="checkout-section contact-section">
                     <h3>Contact Information</h3>
                     <div class="form-group">
@@ -129,19 +153,23 @@
                         <input v-model.trim="order.email" type="email" placeholder="Enter email address" />
                     </div>
 
+                    <!-- Order summary section -->
                     <div class="order-summary-box">
-                        <h4>Review Order</h4>
+                        <h4>Review Booking</h4>
                         <p><strong>Customer:</strong> {{order.firstName}} {{order.lastName}}</p>
                         <p><strong>Phone:</strong> {{order.phone}}</p>
+                        <p><strong>Email:</strong> {{order.email}}</p>
                         <p><strong>Total to Pay:</strong> AED {{cartTotal}}</p>
                     </div>
                         
+                    <!-- Button for final confirmation -->
                     <button v-on:click="submitForm" :disabled="!isValidOrder" class="checkout-btn full-width">
                         Confirm & Book
                     </button>
                 </div>
             </div>
             
+            <!-- Order confirmation modal -->
             <div v-if="orderSubmitted" class="modal-overlay">
                 <div class="modal-content">
                     <h3>Order Confirmed!</h3>
@@ -149,6 +177,7 @@
                         <i class="fa-solid fa-circle-check"></i> 
                         Thank you for your order.
                     </p>
+                    <!-- Reset app and return back to products -->
                     <button @click="resetCart" class="checkout-btn" style="width: 100%">
                         Return to Home
                     </button>
