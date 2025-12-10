@@ -63,6 +63,18 @@ var webstore = new Vue({
             })
             .then(response => response.json())
             .then(data => {
+                this.cart.forEach(item => {
+                    const product = this.products.find(p => p.id === item.id);
+                    if (product) {
+                        const newSpace = product.availableInventory - item.quantity;
+
+                        fetch(`https://cst3144-server-fi5v.onrender.com/collection/lessons/${item.id}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ availableInventory: newSpace })
+                        });
+                    }
+                });
                 alert('Order submitted!');
                 this.cart = [];
                 this.showProduct = true;
