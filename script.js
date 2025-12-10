@@ -151,6 +151,14 @@ var webstore = new Vue({
                     this.cart.splice(cartIndex, 1);
                 }
             }
+        },
+        performSearch: function() {
+            fetch(`https://cst3144-server-fi5v.onrender.com/search/lessons?q=${this.searchQuery}`)
+            .then(response => response.json())
+            .then(json => {
+                this.products = json;
+            })
+            .catch(error => console.error('Error fetching search results:', error));
         }
     },
     computed: {
