@@ -21,8 +21,10 @@
             <div v-if="showProduct">
                 <button class="sort-button" @click="showSortModal = true">
                     <i class="fa-solid fa-arrow-up-wide-short"></i> Sort
-                </button>
-                
+                </button> 
+                <div class="search-bar">
+                    <input type="text" v-model="searchQuery" placeholder="Search lessons..." v-on:input="performSearch">
+                </div>
                 <div class="product-list">
                     <div v-for="product in sortedProducts" :key="product.id" class="product-card">
                         <figure>
@@ -42,7 +44,6 @@
                     </div>
                 </div>
             </div>
-
             <div v-if="showSortModal" class="modal-overlay" @click.self="showSortModal = false">
             <div class="modal-content">
                     <h3>Sort Activities</h3>
@@ -75,10 +76,8 @@
                     </button>
                 </div>
             </div>
-
             <div v-else>
                 <h2>Checkout</h2>
-                
                 <h3>Your Cart ({{cartItemCount}} Items)</h3>
                 <div v-if="cartProducts.length > 0" class="cart-items-container">
                     
@@ -103,13 +102,10 @@
                     </p> 
                     <button v-if="!checkoutConfirmed" @click="proceedToContact">Proceed to Contact Information</button>   
                 </div>
-
                 <div v-else>
                     <p>Your cart is empty.</p>
                 </div>
-                
                 <hr>
-
                 <div v-if="checkoutConfirmed">
                     <h3>Contact Information</h3>
                     <p>
@@ -130,8 +126,7 @@
                     <p>First Name: {{order.firstName}}</p>
                     <p>Last Name: {{order.lastName}}</p>
                     <p>Phone: {{order.phone}}</p>
-                    <p>Email: {{order.email}}</p> 
-                    
+                    <p>Email: {{order.email}}</p>                 
                     <button v-on:click="submitForm">Book</button>
                 </div>
             </div>

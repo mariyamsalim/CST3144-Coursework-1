@@ -5,6 +5,7 @@ var webstore = new Vue({
         showSortModal: false,
         sortCriteria: 'title', 
         sortOrder: 'ascending', 
+        searchQuery: '',
         products: [
             {
             id: 1001,
@@ -162,7 +163,6 @@ var webstore = new Vue({
         canAddToCart() {
             return (product) => product.availableInventory > 0;
         },
-        
         sortedProducts() {
             let productsArray = this.products.slice(); 
             productsArray.sort((a, b) => {
@@ -170,16 +170,13 @@ var webstore = new Vue({
                 const aValue = a[criteria];
                 const bValue = b[criteria];
                 let comparison = 0;
-
                 if (typeof aValue === 'string') {
                     comparison = aValue.localeCompare(bValue);
                 } else {
                     comparison = aValue - bValue;
                 }
-
                 return this.sortOrder === 'ascending' ? comparison : comparison * -1;
             });
-
             return productsArray;
         },
         cartProducts() {
@@ -201,3 +198,5 @@ var webstore = new Vue({
         }
     }
 });
+
+//commit all changes
