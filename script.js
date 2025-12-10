@@ -19,12 +19,12 @@ var webstore = new Vue({
         },
     },
     created: function() {
-    fetch('https://cst3144-server-fi5v.onrender.com/collection/lessons')
+    fetch('https://cst3144-server-fi5v.onrender.com/collection/activities')
         .then(response => response.json())
         .then(json => {
             this.products = json;
         })
-        .catch(error => console.error('Error fetching lessons:', error));
+        .catch(error => console.error('Error fetching activities:', error));
     },
     methods: {
         addToCart(product) {
@@ -66,7 +66,7 @@ var webstore = new Vue({
                     const product = this.products.find(p => p.id === item.id);
                     if (product) {
                         const newSpace = product.availableInventory - item.quantity;
-                        fetch(`https://cst3144-server-fi5v.onrender.com/collection/lessons/${item.id}`, {
+                        fetch(`https://cst3144-server-fi5v.onrender.com/collection/activities/${item.id}`, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ availableInventory: newSpace })
@@ -91,12 +91,21 @@ var webstore = new Vue({
             }
         },
         performSearch: function() {
-            fetch(`https://cst3144-server-fi5v.onrender.com/search/lessons?q=${this.searchQuery}`)
-            .then(response => response.json())
-            .then(json => {
-                this.products = json;
-            })
-            .catch(error => console.error('Error fetching search results:', error));
+            if (this.searchQuery.trim() === '') {
+                fetch('https://cst3144-server-fi5v.onrender.com/collection/activities')
+                    .then(response => response.json())
+                    .then(json => {
+                        this.products = json;
+                    })
+                    .catch(error => console.error('Error fetching activities:', error));
+            } else {
+                fetch(`https://cst3144-server-fi5v.onrender.com/search/activities?q=${this.searchQuery}`)
+                    .then(response => response.json())
+                    .then(json => {
+                        this.products = json;
+                    })
+                    .catch(error => console.error('Error fetching search results:', error));
+            }
         },
         resetCart() {
             this.cart = [];

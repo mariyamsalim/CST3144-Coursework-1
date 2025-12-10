@@ -26,7 +26,11 @@
             <div v-if="showProduct"> <button class="sort-button" @click="showSortModal = true">
                     <i class="fa-solid fa-arrow-up-wide-short"></i> Sort
                 </button> 
-
+                <div v-if="products.length === 0" class="no-results">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <p>We couldn't find any activities matching "<strong>{{searchQuery}}</strong>".</p>
+                    <p>Try checking your spelling or search for a different activity.</p>
+                </div>
                 <div class="product-list">
                     <div v-for="product in sortedProducts" :key="product.id" class="product-card">
                         <figure>
@@ -47,7 +51,7 @@
                         <h3>Sort Activities</h3>
                         <div class="sort-group">
                             <h4>Sort By:</h4>
-                            <label><input type="radio" v-model="sortCriteria" value="title"> Subject</label>
+                            <label><input type="radio" v-model="sortCriteria" value="title"> Activity</label>
                             <label><input type="radio" v-model="sortCriteria" value="price"> Price</label>
                             <label><input type="radio" v-model="sortCriteria" value="location"> Location</label>
                             <label><input type="radio" v-model="sortCriteria" value="availableInventory"> Available Slots</label>

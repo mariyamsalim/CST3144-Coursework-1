@@ -460,3 +460,26 @@ input, select {
     padding: 1rem;
     font-size: 1.1rem;
 }
+
+.no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #555;
+    width: 100%;
+}
+
+.no-results i {
+    font-size: 4rem;
+    color: #e0e0e0; 
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.no-results p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+.no-results strong {
+    color: #0b4b75;
+}
